@@ -413,3 +413,55 @@ function productFib2(prod) {
 
 console.log(productFib2(714));
 console.log(productFib2(800));
+console.log("-------------------------------------------------------");
+
+//rearrange words
+/*
+Complete the function scramble(str1, str2) that returns true if a portion of str1 characters can be rearranged to match str2, otherwise returns false.
+
+Notes:
+
+Only lower case letters will be used (a-z). No punctuation or digits will be included.
+Performance needs to be considered.
+scramble('rkqodlw', 'world') ==> True
+*/
+
+//buscar en la palabra 2 si cada letra esta en la palabra 1
+
+function scramble(str1, str2) {
+  let str0 = str1.split("");
+  for (let i = 0; i < str2.length; i++) {
+    if (!str0.includes(str2[i])) {
+      return false;
+    } else {
+      str0.splice(str0.indexOf(str2[i]), 1);
+    }
+  }
+  return true;
+}
+//el problema con esta solucion es que tiene una complejidad de O(n^2), porque por cada letra de un str va a recorrer todo el otro str
+//opcion mejorada en O(n), cuenta la cantidad de veces que aparece cada letra en cada str:
+function scramble2(str1, str2) {
+  let contchars = {};
+  for (const char of str1) {
+    contchars[char] = (contchars[char] || 0) + 1;
+  }
+  for (const char of str2) {
+    if (!contchars[char]) {
+      return false;
+    }
+    contchars[char]--;
+  }
+  return true;
+}
+
+console.log(scramble("rkqodlw", "world"));
+console.log(scramble("cedewaraaossoqqyt", "codewars"));
+console.log(scramble("katas", "steak"));
+console.log(scramble("scriptjavx", "javascript"));
+
+console.log(scramble2("rkqodlw", "world"));
+console.log(scramble2("cedewaraaossoqqyt", "codewars"));
+console.log(scramble2("katas", "steak"));
+console.log(scramble2("scriptjavx", "javascript"));
+console.log("-------------------------------------------------------");
