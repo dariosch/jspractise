@@ -465,3 +465,83 @@ console.log(scramble2("cedewaraaossoqqyt", "codewars"));
 console.log(scramble2("katas", "steak"));
 console.log(scramble2("scriptjavx", "javascript"));
 console.log("-------------------------------------------------------");
+
+// big numbers
+/*
+We need to sum big numbers and we require your help.
+
+Write a function that returns the sum of two numbers. The input numbers are strings and the function must return a string.
+*/
+
+function add(a, b) {
+  return (BigInt(a) + BigInt(b)).toString();
+}
+
+function add2(a, b) {
+  let a1 = a.split("").reverse();
+  let b1 = b.split("").reverse();
+  let result = [];
+  let carry = 0;
+  for (let i = 0; i < Math.max(a1.length, b1.length); i++) {
+    let resultp = 0;
+    if (Number(a1[i]) >= 0) {
+      if (Number(b1[i]) >= 0) {
+        resultp = Number(a1[i]) + Number(b1[i]);
+      } else {
+        resultp = Number(a1[i]);
+      }
+    } else {
+      resultp = Number(b1[i]);
+    }
+
+    if (carry === 1) {
+      resultp += 1;
+      carry = 0;
+    }
+    if (resultp > 9) {
+      carry = 1;
+      resultp = resultp - 10;
+    }
+    result.push(resultp);
+  }
+  if (carry === 1) {
+    result.push(carry);
+  }
+  return result.reverse().join("");
+}
+
+console.log(add("123", "321"));
+console.log(add("11", "99"));
+console.log(add("63829983432984289347293874", "90938498237058927340892374089"));
+console.log(
+  add2("63829983432984289347293874", "90938498237058927340892374089")
+);
+console.log("-------------------------------------------------------");
+
+// first non-repeating character
+/*
+Write a function named first_non_repeating_letter that takes a string input, and returns the first character that is not repeated anywhere in the string.
+
+For example, if given the input 'stress', the function should return 't', since the letter t only occurs once in the string, and occurs first in the string.
+
+As an added challenge, upper- and lowercase letters are considered the same character, but the function should return the correct case for the initial letter. 
+For example, the input 'sTreSS' should return 'T'.
+
+If a string contains all repeating characters, it should return an empty string ("") or None -- see sample tests.
+*/
+
+function firstNonRepeatingLetter(s) {
+  let repeated = new Set();
+  let s2 = s.toLowerCase();
+  for (let i = 0; i < s.length; i++) {
+    if (!s2.slice(i + 1, s2.length).includes(s2[i]) && !repeated.has(s2[i])) {
+      return s[i];
+    }
+    repeated.add(s2[i]);
+  }
+  return "";
+}
+
+console.log(firstNonRepeatingLetter("stress"));
+console.log(firstNonRepeatingLetter("sTreSS"));
+console.log(firstNonRepeatingLetter("moonmen"));
